@@ -25,7 +25,7 @@ jobs:
         run: |
           cd frontend
           npm install
-          npm start
+          npm run build
       # Build and run backend services
       - name: Build and run backend services
         run: |
