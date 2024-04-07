@@ -47,7 +47,7 @@ if (app.Environment.IsDevelopment())
 using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<IdentityContext>();
-    dbContext.Database.Migrate();
+    dbContext.Database.Migrate()
 }
 
 app.UseHttpsRedirection();
