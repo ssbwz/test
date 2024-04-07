@@ -1,5 +1,5 @@
 name: identity-api
-
+on:
   push:
     branches: [ main ]
     paths:
