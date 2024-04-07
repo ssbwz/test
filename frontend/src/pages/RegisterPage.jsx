@@ -50,7 +50,7 @@ function RegisterPage() {
                     navigate("/login")
                 }).catch(function (error) {
                     if (error.response) {
-                        if (error.response.status == 400) {
+                        if (error.response.status === 400) {
                             setVEmail("This email is already been used");
                         }
                         else
