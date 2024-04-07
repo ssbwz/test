@@ -13,19 +13,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      
-      # Install dependencies and build frontend
-      - name: Install Node.js
-        uses: actions/setup-node@v2
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
         with:
-          node-version: '14'
-      - name: Install dependencies and build frontend
-        run: |
-          cd frontend
-          npm install
-          npm run build
+          node-version: ${{ matrix.node-version }}
+      - run: npm ci
+      - run: npm run build --if-present
+      - run: npm test
+    
       # Build and run backend services
       - name: Build and run backend services
         run: |
