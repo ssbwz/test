@@ -40,6 +40,5 @@ jobs:
       # Start Cypress tests
       - name: Install Cypress and run tests
         run: |
-          cd tests
-          npm install cypress --save-dev
+          cd frontend
           npx cypress run
