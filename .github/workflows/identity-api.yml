@@ -10,7 +10,7 @@ on:
 
 jobs:
   build:
-    runs-on: DESKTOP-IFE360H
+    runs-on: self-hosted
     env:
       CI: false
       DOTNET_VERSION: 8.0.x
