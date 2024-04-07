@@ -31,8 +31,7 @@ jobs:
         
     - name: Build
       run: |
-        cd identity_service
-        dotnet restore "identity_service.sln"
-        dotnet build "identity_service.sln"
+        docker-compose up --build
+        
         
         
