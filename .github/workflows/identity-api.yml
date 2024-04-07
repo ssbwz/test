@@ -1,4 +1,4 @@
-name: Docker Compose Build
+name: Full CI/CD Pipeline
 
 on:
   push:
@@ -16,14 +16,29 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       
-      - name: Install Docker
+      # Install dependencies and build frontend
+      - name: Install Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      - name: Install dependencies and build frontend
         run: |
-          sudo apt-get update
-          sudo apt-get install -y docker.io
-          sudo apt-get install -y docker-compose
-      
-      - name: Build Docker images
-        run: |
-          docker-compose build
+          cd frontend
+          npm install
+          npm run build
 
-      # Add other steps as needed, such as deploying the containers.
+      # Build and run backend services
+      - name: Build and run backend services
+        run: |
+          cd identity_service
+          dotnet restore "identity_service.sln"
+          dotnet build "identity_service.sln"
+          
+          # Repeat for other services as needed
+
+      # Start Cypress tests
+      - name: Install Cypress and run tests
+        run: |
+          cd tests
+          npm install cypress --save-dev
+          npx cypress run
