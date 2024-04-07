@@ -1,42 +1,29 @@
-name: identity-api
+name: Docker Compose Build
+
 on:
   push:
-    branches: [ main ]
-    paths:
-      - identity_service/**
-      - .github/workflows/identity-api.yml
+    branches:
+      - main
   pull_request:
-    branches: [ main ]
-    paths:
-      - identity_service/**
-      - .github/workflows/identity-api.yml
-
-  workflow_dispatch:
-  
-env:
-  SERVICE: identity_api
-  DOTNET_VERSION: 8.0.x
+    branches:
+      - main
 
 jobs:
-  Build:
+  build:
     runs-on: ubuntu-latest
+
     steps:
-    - name: 'Checkout Github Action'
-      uses: actions/checkout@main
-    
-    - name: Setup dotnet
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: ${{ env.DOTNET_VERSION }}
-        
-    - name: Install Docker
-      run: |
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      - name: Install Docker
+        run: |
           sudo apt-get update
           sudo apt-get install -y docker.io
           sudo apt-get install -y docker-compose
-    
-    - name: Run docker-compose
-      run: |
-          docker-compose up --build
-        
-        
+      
+      - name: Build Docker images
+        run: |
+          docker-compose build
+
+      # Add other steps as needed, such as deploying the containers.
