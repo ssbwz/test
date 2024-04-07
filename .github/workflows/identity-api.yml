@@ -1,0 +1,37 @@
+name: identity-api
+
+  push:
+    branches: [ main ]
+    paths:
+      - identity_service/**
+      - .github/workflows/identity-api.yml
+  pull_request:
+    branches: [ main ]
+    paths:
+      - identity_service/**
+      - .github/workflows/identity-api.yml
+
+  workflow_dispatch:
+  
+env:
+  SERVICE: identity_api
+  DOTNET_VERSION: 5.0.x
+
+jobs:
+  BuildForPR:
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'pull_request' }}
+    steps:
+    - name: 'Checkout Github Action'
+      uses: actions/checkout@main
+    
+    - name: Setup dotnet
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+        
+    - name: Build and run unit tests
+      run: |
+        cd identity_service
+        dotnet restore "identity_service.sln"
+        
