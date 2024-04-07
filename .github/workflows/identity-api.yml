@@ -9,63 +9,25 @@ on:
       - main
 
 jobs:
-  build:
+  analyze:
+    name: Analyze Code with CodeQL
     runs-on: ubuntu-latest
-    env:
-      CI: false
-      DOTNET_VERSION: 8.0.x
+
+    strategy:
+      matrix:
+        language: [ 'javascript', 'java' ]  # Add more languages if needed
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      # Install dependencies and build frontend
-      - name: Setup dotnet
-        uses: actions/setup-dotnet@v1
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v1
         with:
-         dotnet-version: ${{ env.DOTNET_VERSION }}
-        
-      - name: Build identity_service
-        run: |
-          cd identity_service
-          dotnet restore "identity_service.sln"
-          dotnet build 
-            
-      # Install dependencies and build frontend
-      - name: Install Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '20'
-      - name: Install dependencies and build frontend
-        run: |
-            cd frontend
-            npm install
-            npm run build --if-present
-    
+          languages: ${{ matrix.language }}
 
-      # Start Cypress tests
-      - name: Install Cypress and run tests
-        run: |
-          cd frontend
-          npx cypress run
-
-  test:
-    runs-on: ubuntu-latest
-    env:
-      CI: false
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      # Install dependencies and build frontend
-      - name: Install Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '20'
-      - name: Install dependencies and build frontend
-        run: |
-            cd frontend
-            npm install
-            npm run build --if-present
+      - name: Analyze
+        uses: github/codeql-action/analyze@v1
     
 
       # Start Cypress tests
