@@ -15,7 +15,7 @@ on:
   
 env:
   SERVICE: identity_api
-  DOTNET_VERSION: 5.0.x
+  DOTNET_VERSION: 8.0.x
 
 jobs:
   Build:
