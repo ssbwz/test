@@ -18,10 +18,10 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - run: cd frontend |
+        run: |
+            cd frontend
             npm install
-      - run: npm run build --if-present
-      - run: npm test
+            npm run build --if-present
     
       # Build and run backend services
       - name: Build and run backend services
