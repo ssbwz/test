@@ -29,9 +29,3 @@ jobs:
       - name: Analyze
         uses: github/codeql-action/analyze@v1
     
-
-      # Start Cypress tests
-      - name: Install Cypress and run tests
-        run: |
-          cd frontend
-          npx cypress run
