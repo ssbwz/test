@@ -9,23 +9,23 @@ on:
       - main
 
 jobs:
-  analyze:
-    name: Analyze Code with CodeQL
-    runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        language: [ 'javascript', 'java' ]  # Add more languages if needed
-
+  build:
+    runs-on: DESKTOP-IFE360H
+    env:
+      CI: false
+      DOTNET_VERSION: 8.0.x
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Initialize CodeQL
-        uses: github/codeql-action/init@v3
+      # Setting up dotnet
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v1
         with:
-          languages: ${{ matrix.language }}
-
-      - name: Analyze
-        uses: github/codeql-action/analyze@v2
-    
+         dotnet-version: ${{ env.DOTNET_VERSION }}
+        
+      - name: Build identity_service
+        run: |
+          cd identity_service
+          dotnet restore "identity_service.sln"
+          dotnet build
