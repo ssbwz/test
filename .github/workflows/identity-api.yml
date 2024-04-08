@@ -33,8 +33,8 @@ jobs:
       - name: Analysis identity_service
         run: |
           cd identity_service
-          dotnet sonarscanner begin /k:"s" /d:sonar.host.url="http://localhost:9000"  /d:sonar.login="sqp_7e41542d45d877fe2a7214b54705df71f6b33e64"
+          dotnet sonarscanner begin /k:"identity_service" /d:sonar.host.url="http://localhost:9000"  /d:sonar.login="sqp_85a3f312b515e832eba44c38cba65bfda68b1eb3"
           dotnet build
-          dotnet sonarscanner end /d:sonar.login="sqp_7e41542d45d877fe2a7214b54705df71f6b33e64"
+          dotnet sonarscanner end /d:sonar.login="sqp_85a3f312b515e832eba44c38cba65bfda68b1eb3"
 
         
